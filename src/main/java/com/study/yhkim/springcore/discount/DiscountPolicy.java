@@ -7,5 +7,5 @@ public interface DiscountPolicy {
     /**
      * @return Amount eligible for discount
      */
-    int discout(Member member, int price);
+    int discount(Member member, int price);
 }

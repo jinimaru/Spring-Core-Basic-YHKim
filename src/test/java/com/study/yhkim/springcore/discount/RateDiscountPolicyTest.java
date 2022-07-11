@@ -17,7 +17,7 @@ class RateDiscountPolicyTest {
         Member member = new Member(1L, "memberVIP", Grade.VIP);
 
         //when
-        int discount = discountPolicy.discout(member, 10000);
+        int discount = discountPolicy.discount(member, 10000);
 
         //then
         Assertions.assertThat(discount).isEqualTo(1000);
@@ -27,10 +27,10 @@ class RateDiscountPolicyTest {
     @DisplayName("If the member is not a VIP, the 10% discount should not be applied.")
     void vip_x() {
         //given
-        Member member = new Member(2L, "memberBASIC", Grade.Basic);
+        Member member = new Member(2L, "memberBASIC", Grade.BASIC);
 
         //when
-        int discount = discountPolicy.discout(member, 10000);
+        int discount = discountPolicy.discount(member, 10000);
 
         //then
         Assertions.assertThat(discount).isNotEqualTo(1000);
