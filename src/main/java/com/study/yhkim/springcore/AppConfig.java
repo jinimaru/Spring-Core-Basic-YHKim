@@ -1,7 +1,6 @@
 package com.study.yhkim.springcore;
 
 import com.study.yhkim.springcore.discount.DiscountPolicy;
-import com.study.yhkim.springcore.discount.FixDiscountPolicy;
 import com.study.yhkim.springcore.discount.RateDiscountPolicy;
 import com.study.yhkim.springcore.member.MemberRepository;
 import com.study.yhkim.springcore.member.MemberService;
@@ -30,11 +29,11 @@ public class AppConfig {
     코드 중복을 제거하고 역할과 구현이 보이도록 리펙터링
      - 메서드 이름을 보면 역할(Implements)이 드러나고, 구현(Class)이 보인다.
     */
-    private MemberRepository memberRepository() {
+    public MemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
 
-    private DiscountPolicy discountPolicy() {
+    public DiscountPolicy discountPolicy() {
         return new RateDiscountPolicy();
     }
 
