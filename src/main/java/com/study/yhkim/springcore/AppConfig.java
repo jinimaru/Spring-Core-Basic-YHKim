@@ -1,7 +1,6 @@
 package com.study.yhkim.springcore;
 
 import com.study.yhkim.springcore.discount.DiscountPolicy;
-import com.study.yhkim.springcore.discount.FixDiscountPolicy;
 import com.study.yhkim.springcore.discount.RateDiscountPolicy;
 import com.study.yhkim.springcore.member.MemberRepository;
 import com.study.yhkim.springcore.member.MemberService;
@@ -9,7 +8,10 @@ import com.study.yhkim.springcore.member.MemberServiceImpl;
 import com.study.yhkim.springcore.member.MemoryMemberRepository;
 import com.study.yhkim.springcore.order.OrderService;
 import com.study.yhkim.springcore.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class AppConfig {
 
     /*
@@ -25,16 +27,17 @@ public class AppConfig {
     }
     */
 
+
     /*
-    (Refactoring)
+    (Second Code)
     코드 중복을 제거하고 역할과 구현이 보이도록 리펙터링
      - 메서드 이름을 보면 역할(Implements)이 드러나고, 구현(Class)이 보인다.
-    */
-    private MemberRepository memberRepository() {
+
+    public MemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
 
-    private DiscountPolicy discountPolicy() {
+    public DiscountPolicy discountPolicy() {
         return new RateDiscountPolicy();
     }
 
@@ -42,6 +45,31 @@ public class AppConfig {
         return new MemberServiceImpl(memberRepository());
     }
 
+    public OrderService orderService() {
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
+    }
+    */
+
+
+    /*
+    (Refactoring) - 스프링 프레임워크 DI 컨테이너로 리펙터링
+    */
+    @Bean
+    public MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+
+    @Bean
+    public DiscountPolicy discountPolicy() {
+        return new RateDiscountPolicy();
+    }
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberServiceImpl(memberRepository());
+    }
+
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }

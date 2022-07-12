@@ -3,6 +3,8 @@ package com.study.yhkim.springcore;
 import com.study.yhkim.springcore.member.Grade;
 import com.study.yhkim.springcore.member.Member;
 import com.study.yhkim.springcore.member.MemberService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MemberApp {
 
@@ -15,11 +17,19 @@ public class MemberApp {
         memberService 인스턴스를 생성할 때 구현체(MemberServiceImpl)에 의존 (DIP 위배)
         */
 
+
         /*
-        (Refactoring) - DI 컨테이너 AppConfig 클래스를 이용, 생성자를 통한 의존성 주입
-        */
+        (Second Code) - DI 컨테이너 AppConfig 클래스를 이용, 생성자를 통한 의존성 주입
         AppConfig appConfig = new AppConfig();
         MemberService memberService = appConfig.memberService();
+        */
+
+
+        /*
+        (Refactoring)  - 스프링 DI 컨테이너 ApplicationContext 이용
+        */
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService = ac.getBean("memberService", MemberService.class);
 
         Member member = new Member(1L, "memberA", Grade.VIP);
         memberService.join(member);
