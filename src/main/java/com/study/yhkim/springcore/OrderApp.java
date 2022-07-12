@@ -5,6 +5,8 @@ import com.study.yhkim.springcore.member.Member;
 import com.study.yhkim.springcore.member.MemberService;
 import com.study.yhkim.springcore.order.Order;
 import com.study.yhkim.springcore.order.OrderService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class OrderApp {
 
@@ -18,12 +20,21 @@ public class OrderApp {
         구현제(MemberServiceImpl, OrderServiceImpl)에 의존. (DIP 위배)
         */
 
+
         /*
-        (Refactoring) - DI 컨테이너 AppConfig 클래스를 이용, 생성자를 통한 의존성 주입
-        */
+        (Second Code) - DI 컨테이너 AppConfig 클래스를 이용, 생성자를 통한 의존성 주입
         AppConfig appConfig = new AppConfig();
         MemberService memberService = appConfig.memberService();
         OrderService orderService = appConfig.orderService();
+        */
+
+
+        /*
+        (Refactoring) - 스프링 DI 컨테이너 ApplicationContext 이용
+        */
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService = ac.getBean("memberService", MemberService.class);
+        OrderService orderService = ac.getBean("orderService", OrderService.class);
 
         Long memberId = 1L;
         Member member = new Member(memberId, "memberA", Grade.VIP);
