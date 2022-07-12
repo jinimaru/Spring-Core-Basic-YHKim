@@ -2,6 +2,7 @@ package com.study.yhkim.springcore;
 
 import com.study.yhkim.springcore.discount.DiscountPolicy;
 import com.study.yhkim.springcore.discount.FixDiscountPolicy;
+import com.study.yhkim.springcore.discount.RateDiscountPolicy;
 import com.study.yhkim.springcore.member.MemberRepository;
 import com.study.yhkim.springcore.member.MemberService;
 import com.study.yhkim.springcore.member.MemberServiceImpl;
@@ -34,7 +35,7 @@ public class AppConfig {
     }
 
     private DiscountPolicy discountPolicy() {
-        return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
     }
 
     public MemberService memberService() {
